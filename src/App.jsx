@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import routes from '@/routes/routes';
+import { Suspense } from 'react';
+import { Routes, BrowserRouter, Route } from 'react-router-dom';
+import { AuthProvider } from '@contexts/AuthProvider';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SideBarProvider } from '@contexts/SideBarProvider';
+import { FilterProvider } from './contexts/FilterProvider';
+
+const queryClient = new QueryClient();
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (
+        <SideBarProvider>
+            <QueryClientProvider client={queryClient}>
+                <AuthProvider>
+                    <FilterProvider>
+                        <BrowserRouter>
+                            <Suspense fallback={<div>LOADING........</div>}>
+                                <Routes>
+                                    {routes.map((item, index) => {
+                                        return (
+                                            <Route
+                                                path={item.path}
+                                                element={<item.component />}
+                                                key={index}
+                                            />
+                                        );
+                                    })}
+                                </Routes>
+                            </Suspense>
+                        </BrowserRouter>
+                    </FilterProvider>
+                </AuthProvider>
+            </QueryClientProvider>
+        </SideBarProvider>
+    );
 }
 
-export default App
+export default App;
