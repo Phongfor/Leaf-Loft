@@ -12,6 +12,10 @@ const routes = [
     {
         path: '/detailproduct',
         component: lazy(() => import('@pages/ProductDetail/ProductDetail'))
+    },
+    {
+        path: '/contact-us',
+        component: lazy(() => import('@pages/ContactUs/ContactUs'))
     }
 ];
 

@@ -23,7 +23,7 @@ function ProductDetail() {
     );
     const currentPrice = currentVariant?.price ?? productDetail.price;
 
-    console.log(currentPrice)
+    console.log(currentPrice);
 
     const handleSelectColor = (color) => {
         setSelectedColor(color);
@@ -56,6 +56,8 @@ function ProductDetail() {
                         setMainImage={setMainImage}
                     />
                     <ProductInfo
+                        productId={productDetail.id} 
+                        mainImage={mainImage}
                         name={productDetail.name}
                         description={productDetail.description}
                         price={currentPrice} // ✅ variant-aware price

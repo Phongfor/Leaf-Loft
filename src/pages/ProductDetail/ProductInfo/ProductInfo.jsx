@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ProductSize from '../../../components/common/ProductSize/ProductSize';
 import ProductQuantity from '../../../components/common/ProductQuantity/ProductQuantity';
 import ProductColor from '../../../components/common/ProductColor/ProductColor';
 import Button from '@/components/common/Button/Button';
+import { SideBarContext } from '@/contexts/SideBarProvider';
 
 function ProductInfo({
+    productId,
     name,
     description,
     price,
@@ -15,8 +17,23 @@ function ProductInfo({
     setSelectedColor,
     selectedSize,
     setSelectedSize,
+    mainImage
 }) {
     const [quantity, setQuantity] = useState(1);
+    const { addToCart, toggleWishlist, wishlist } = useContext(SideBarContext);
+    const isWishlisted = wishlist.some((item) => item.id === productId);
+
+    const handleAddToCart = () => {
+        addToCart({
+            id: productId,
+            name,
+            price,
+            image: mainImage,
+            color: selectedColor.name,
+            size: selectedSize,
+            quantity
+        });
+    };
 
     return (
         <div>
@@ -24,9 +41,13 @@ function ProductInfo({
 
             {price ? (
                 <div className='flex items-center gap-3 mt-3'>
-                    <span className='text-2xl font-bold text-green-500'>${price}</span>
+                    <span className='text-2xl font-bold text-green-500'>
+                        ${price}
+                    </span>
                     {oldPrice && (
-                        <span className='line-through text-gray-400'>${oldPrice}</span>
+                        <span className='line-through text-gray-400'>
+                            ${oldPrice}
+                        </span>
                     )}
                 </div>
             ) : (
@@ -42,7 +63,10 @@ function ProductInfo({
             />
 
             <div className='flex gap-6 mt-6'>
-                <ProductQuantity quantity={quantity} setQuantity={setQuantity} />
+                <ProductQuantity
+                    quantity={quantity}
+                    setQuantity={setQuantity}
+                />
                 <ProductSize
                     sizes={sizes}
                     selectedSize={selectedSize}
@@ -50,8 +74,8 @@ function ProductInfo({
                 />
             </div>
 
-            <Button content='Add to Cart' isPrimary className='w-full mt-6' />
-            <Button content='Save to Wishlist' className='w-full mt-3' />
+            <Button content='Add to Cart' isPrimary className='w-full mt-6'  onClick={handleAddToCart} />
+            <Button content={isWishlisted ? 'Đã lưu' : 'Save to Wishlist'} className='w-full mt-3'  onClick={() => toggleWishlist({ id: productId, name, price, image: mainImage })}/>
         </div>
     );
 }

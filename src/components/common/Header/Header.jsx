@@ -14,9 +14,9 @@ import useScrollHeader from '@/hooks/useScrollHeader';
 
 function Header() {
     const { openLogin, user, setUser } = useContext(AuthContext);
-    const { setIsOpen, setType } = useContext(SideBarContext);
+    const { setIsOpen, setType, cartCount, wishlistCount } =
+        useContext(SideBarContext);
     const showHeader = useScrollHeader();
-   
 
     const logout = () => {
         setUser(null);
@@ -29,7 +29,6 @@ function Header() {
         setIsOpen(true);
         setType(type);
     };
-
 
     return (
         <header
@@ -59,18 +58,22 @@ function Header() {
                             className='text-2xl cursor-pointer'
                             onClick={() => handleOpenCartSideBar('wishlist')}
                         />
-                        <span className='absolute -top-1 -right-2 w-4 h-4 text-[10px] bg-primary text-white rounded-full flex items-center justify-center'>
-                            2
-                        </span>
+                        {wishlistCount > 0 && (
+                            <span className='absolute -top-1 -right-2 w-4 h-4 text-[10px] bg-primary text-white rounded-full flex items-center justify-center'>
+                                {wishlistCount}
+                            </span>
+                        )}
                     </div>
                     <div className='relative'>
                         <PiShoppingCartLight
                             className='text-2xl cursor-pointer'
                             onClick={() => handleOpenCartSideBar('cart')}
                         />
-                        <span className='absolute -top-1 -right-2 w-4 h-4 text-[10px] bg-primary text-white rounded-full flex items-center justify-center'>
-                            4
-                        </span>
+                        {cartCount > 0 && (
+                            <span className='absolute -top-1 -right-2 w-4 h-4 text-[10px] bg-primary text-white rounded-full flex items-center justify-center'>
+                                {cartCount}
+                            </span>
+                        )}
                     </div>
 
                     <ContentSideBar />

@@ -2,8 +2,9 @@ import { useForm } from 'react-hook-form';
 import { useContext } from 'react';
 import Input from '@components/common/Input/Input';
 import { AuthContext } from '@/contexts/AuthProvider';
-import { FaPencilAlt } from "react-icons/fa";
-import {registers} from '@/services/AuthService'
+import { FaPencilAlt } from 'react-icons/fa';
+import { registers } from '@/services/AuthService';
+import { toast } from 'sonner';
 
 function RightContent() {
     const {
@@ -17,13 +18,16 @@ function RightContent() {
     const password = watch('password');
 
     const onSubmit = async (data) => {
-    try {
-        const res = await registers(data);
-        console.log(res);
-    } catch (err) {
-        console.log(err);
-    }
-};
+        try {
+            await registers(data);
+            toast.success('Đăng ký thành công! Vui lòng đăng nhập.');
+            openLogin(); 
+        } catch (err) {
+            toast.error(
+                err?.response?.data?.message ?? 'Đăng ký thất bại, thử lại sau'
+            );
+        }
+    };
 
     return (
         <div className='relative w-full p-8'>
@@ -46,7 +50,6 @@ function RightContent() {
                         rules={{ required: 'First name required' }}
                         isRequired
                     />
-
                     <Input
                         label='Last Name'
                         name='lastName'
@@ -77,10 +80,7 @@ function RightContent() {
                     error={errors.password}
                     rules={{
                         required: 'Password required',
-                        minLength: {
-                            value: 8,
-                            message: 'Minimum 8 characters'
-                        }
+                        minLength: { value: 8, message: 'Minimum 8 characters' }
                     }}
                     isRequired
                 />
@@ -93,7 +93,7 @@ function RightContent() {
                     register={register}
                     error={errors.confirmPassword}
                     rules={{
-                        required: 'Confirm password',
+                        required: 'Confirm password required',
                         validate: (value) =>
                             value === password || 'Passwords do not match'
                     }}
@@ -110,7 +110,6 @@ function RightContent() {
                         rules={{ required: 'Date of birth required' }}
                         isRequired
                     />
-
                     <Input
                         label='City'
                         name='city'
@@ -139,7 +138,8 @@ function RightContent() {
                     </span>
                 </p>
             </form>
-            <FaPencilAlt className='absolute text-4xl text-second-light top-24 right-2 pointer-events-none'/>
+
+            <FaPencilAlt className='absolute text-4xl text-second-light top-24 right-2 pointer-events-none' />
         </div>
     );
 }

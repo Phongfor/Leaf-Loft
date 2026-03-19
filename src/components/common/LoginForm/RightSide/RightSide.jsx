@@ -7,6 +7,7 @@ import { FaGoogle, FaApple } from 'react-icons/fa';
 import { AuthContext } from '@/contexts/AuthProvider';
 import { useContext } from 'react';
 import { login } from '@/services/AuthService';
+import { toast } from 'sonner';
 
 function RightSide() {
     const {
@@ -18,14 +19,25 @@ function RightSide() {
     const { openRegister, setUser, closeAuth } = useContext(AuthContext);
 
     const onSubmit = async (data) => {
-        const res = await login(data);
-        console.log(res);
+        try {
+            const res = await login(data);
 
-        setUser(res.data.result.userName);
-        localStorage.setItem('user', JSON.stringify(res.data.result.userName));
-        localStorage.setItem('accessToken', res.data.result.accessToken);
-        localStorage.setItem('refreshToken', res.data.result.refreshToken);
-        closeAuth();
+            setUser(res.data.result.userName);
+            localStorage.setItem(
+                'user',
+                JSON.stringify(res.data.result.userName)
+            );
+            localStorage.setItem('accessToken', res.data.result.accessToken);
+            localStorage.setItem('refreshToken', res.data.result.refreshToken);
+
+            toast.success('Đăng nhập thành công!');
+            closeAuth();
+        } catch (err) {
+            toast.error(
+                err?.response?.data?.message ??
+                    'Đăng nhập thất bại, thử lại sau'
+            );
+        }
     };
 
     return (
