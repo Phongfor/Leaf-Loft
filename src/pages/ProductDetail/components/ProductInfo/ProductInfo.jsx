@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
-import ProductSize from '../../../components/common/ProductSize/ProductSize';
-import ProductQuantity from '../../../components/common/ProductQuantity/ProductQuantity';
-import ProductColor from '../../../components/common/ProductColor/ProductColor';
+import ProductSize from '../../../../components/common/ProductSize/ProductSize';
+import ProductQuantity from '../../../../components/common/ProductQuantity/ProductQuantity';
+import ProductColor from '../../../../components/common/ProductColor/ProductColor';
 import Button from '@/components/common/Button/Button';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 
@@ -74,8 +74,24 @@ function ProductInfo({
                 />
             </div>
 
-            <Button content='Add to Cart' isPrimary className='w-full mt-6'  onClick={handleAddToCart} />
-            <Button content={isWishlisted ? 'Đã lưu' : 'Save to Wishlist'} className='w-full mt-3'  onClick={() => toggleWishlist({ id: productId, name, price, image: mainImage })}/>
+            <Button
+                content='Add to Cart'
+                isPrimary
+                className='w-full mt-6'
+                onClick={handleAddToCart}
+            />
+            <Button
+                content={isWishlisted ? 'Đã lưu' : 'Save to Wishlist'}
+                className='w-full mt-3'
+                onClick={() =>
+                    toggleWishlist({
+                        id: productId,
+                        name,
+                        price,
+                        image: mainImage
+                    })
+                }
+            />
         </div>
     );
 }

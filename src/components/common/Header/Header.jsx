@@ -11,12 +11,14 @@ import AuthModal from '../AuthModal/AuthModal';
 import { SideBarContext } from '@contexts/SideBarProvider';
 import ContentSideBar from '../ContentSideBar/ContentSideBar';
 import useScrollHeader from '@/hooks/useScrollHeader';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
     const { openLogin, user, setUser } = useContext(AuthContext);
     const { setIsOpen, setType, cartCount, wishlistCount } =
         useContext(SideBarContext);
     const showHeader = useScrollHeader();
+    const naviagte = useNavigate()
 
     const logout = () => {
         setUser(null);
@@ -37,7 +39,7 @@ function Header() {
         >
             <div className='flex items-center justify-between px-10 h-20'>
                 <div className='flex items-center gap-10'>
-                    <img src={logo} alt='logo' className='w-32' />
+                    <img src={logo} alt='logo' className='w-32 cursor-pointer' onClick={()=> naviagte("/")} />
 
                     <div className='flex gap-6'>
                         {dataMenu.map((menu, index) => (

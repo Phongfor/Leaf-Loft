@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Footer from '@/components/common/Footer/Footer';
 import Header from '@/components/common/Header/Header';
-import ProductImage from './ProductImage/ProductImage';
+import ProductImage from './components/ProductImage/ProductImage';
 import productDetail from './contants';
-import ProductInfo from './ProductInfo/ProductInfo';
+import ProductInfo from './components/ProductInfo/ProductInfo';
 import RelatedProducts from '@/components/common/RelatedProducts/RelatedProducts';
 import relatedProducts from '@/components/common/RelatedProducts/contants';
 
@@ -56,7 +56,7 @@ function ProductDetail() {
                         setMainImage={setMainImage}
                     />
                     <ProductInfo
-                        productId={productDetail.id} 
+                        productId={productDetail.id}
                         mainImage={mainImage}
                         name={productDetail.name}
                         description={productDetail.description}
