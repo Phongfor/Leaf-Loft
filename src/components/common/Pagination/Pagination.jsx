@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import ReactPaginate from 'react-paginate';
-import { FilterContext } from '@contexts/FilterProvider';
 import products from '@components/common/ShopProductCard/contants';
+import { OurShopContext } from '@contexts/OurShopProvider';
 
 const ITEMS_PER_PAGE = 8;
 
 function Pagination() {
-    const { category, currentPage, setCurrentPage } = useContext(FilterContext);
+    const { category, currentPage, setCurrentPage } = useContext(OurShopContext);
 
     const filteredProducts = products.filter((p) => {
         if (category === 'All Items') return true;

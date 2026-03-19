@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { fakeRefreshTokenApi } from '../services/FakeAPI';
 
 const axiosClient = axios.create({
-    baseURL: 'https://fakestoreapi.com',
+    baseURL: 'http://localhost:5173/api',
     headers: {
         'Content-Type': 'application/json'
     }
@@ -44,7 +43,7 @@ axiosClient.interceptors.response.use(
             if (err.response?.status === 401 && !originalRequest._retry) {
                 originalRequest._retry = true;
 
-                const res = await fakeRefreshTokenApi(refreshToken);
+                const res = await refreshToken(refreshToken);
                 const newAccessToken = res.accessToken;
 
                 console.log('Refresh token success');

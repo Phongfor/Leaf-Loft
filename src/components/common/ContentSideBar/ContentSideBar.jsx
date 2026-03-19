@@ -7,10 +7,10 @@ import WhislistSideBar from './WhislistSideBar/WhislistSideBar';
 import CartSidebar from './CartSideBar.jsx/CartSideBar';
 
 function ContentSideBar() {
-    const { openCart, setOpenCart, type } = useContext(SideBarContext);
+    const { isOpen, setIsOpen, type } = useContext(SideBarContext);
 
     const handleCloseCartSideBar = () => {
-        setOpenCart(false);
+        setIsOpen(false);
     };
      const handleRenderContent = () => {
         switch (type) {   
@@ -25,7 +25,7 @@ function ContentSideBar() {
     return (
         <>
             {/* Overlay */}
-            {openCart && (
+            {isOpen && (
                 <div
                     className='fixed inset-0 bg-black/40 z-50'
                     onClick={handleCloseCartSideBar}
@@ -36,7 +36,7 @@ function ContentSideBar() {
             <div
                 className={clsx(
                     'fixed top-0 right-0 h-full w-[420px] bg-[#f5f5f5] z-50 transition-transform duration-300',
-                    openCart ? 'translate-x-0' : 'translate-x-[120%]'
+                    isOpen ? 'translate-x-0' : 'translate-x-[120%]'
                 )}
             >
 

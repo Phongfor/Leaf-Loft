@@ -11,12 +11,12 @@ import AuthModal from '../AuthModal/AuthModal';
 import { SideBarContext } from '@contexts/SideBarProvider';
 import ContentSideBar from '../ContentSideBar/ContentSideBar';
 import useScrollHeader from '@/hooks/useScrollHeader';
-import { useNavigate } from 'react-router-dom';
+
 function Header() {
     const { openLogin, user, setUser } = useContext(AuthContext);
-    const { setOpenCart, setType } = useContext(SideBarContext);
+    const { setIsOpen, setType } = useContext(SideBarContext);
     const showHeader = useScrollHeader();
-    const navigate = useNavigate();
+   
 
     const logout = () => {
         setUser(null);
@@ -26,9 +26,10 @@ function Header() {
         localStorage.removeItem('expiresAt');
     };
     const handleOpenCartSideBar = (type) => {
-        setOpenCart(true);
+        setIsOpen(true);
         setType(type);
     };
+
 
     return (
         <header
@@ -78,7 +79,7 @@ function Header() {
                             <span className='font-semibold text-lime-300'>
                                 Hello :
                                 <span className='cursor-pointer ml-1'>
-                                    {user.name}
+                                    {user}
                                 </span>
                             </span>
 

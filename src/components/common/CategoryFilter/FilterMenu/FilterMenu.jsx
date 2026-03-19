@@ -1,11 +1,12 @@
-import { FilterContext } from '@/contexts/FilterProvider';
+
 import { useContext } from 'react';
 import ButtonOption from '../ButtonOption/ButtonOption';
+import { OurShopContext } from '@/contexts/OurShopProvider';
 
 // FilterMenu.jsx
 function FilterMenu() {
     const { brand, setBrand, price, setPrice, setCurrentPage } =
-        useContext(FilterContext);
+        useContext(OurShopContext);
 
     const priceOptions = [
         { label: 'All', value: 'all' },

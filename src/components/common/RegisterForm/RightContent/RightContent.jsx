@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import Input from '@components/common/Input/Input';
 import { AuthContext } from '@/contexts/AuthProvider';
 import { FaPencilAlt } from "react-icons/fa";
-
+import {registers} from '@/services/AuthService'
 
 function RightContent() {
     const {
@@ -16,9 +16,14 @@ function RightContent() {
     const { openLogin } = useContext(AuthContext);
     const password = watch('password');
 
-    const onSubmit = (data) => {
-        console.log(data);
-    };
+    const onSubmit = async (data) => {
+    try {
+        const res = await registers(data);
+        console.log(res);
+    } catch (err) {
+        console.log(err);
+    }
+};
 
     return (
         <div className='relative w-full p-8'>

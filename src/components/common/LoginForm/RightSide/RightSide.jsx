@@ -6,7 +6,7 @@ import Button from '@components/common/Button/Button';
 import { FaGoogle, FaApple } from 'react-icons/fa';
 import { AuthContext } from '@/contexts/AuthProvider';
 import { useContext } from 'react';
-import { fakeLoginApi } from '@/services/FakeAPI';
+import { login } from '@/services/AuthService';
 
 function RightSide() {
     const {
@@ -15,19 +15,19 @@ function RightSide() {
         formState: { errors }
     } = useForm();
 
-    const { openRegister,setUser,closeAuth } = useContext(AuthContext);
+    const { openRegister, setUser, closeAuth } = useContext(AuthContext);
 
     const onSubmit = async (data) => {
-        const res = await fakeLoginApi(data.email,data.password)
-        const { accessToken,expiresAt, refreshToken, user } = res;
-        setUser(user);
-        localStorage.setItem("user",JSON.stringify(user));
-        localStorage.setItem("accessToken",accessToken);
-        localStorage.setItem("expiresAt",expiresAt);
-        localStorage.setItem("refreshToken",refreshToken);
+        const res = await login(data);
+        console.log(res);
+
+        setUser(res.data.result.userName);
+        localStorage.setItem('user', JSON.stringify(res.data.result.userName));
+        localStorage.setItem('accessToken', res.data.result.accessToken);
+        localStorage.setItem('refreshToken', res.data.result.refreshToken);
         closeAuth();
     };
-    
+
     return (
         <motion.div
             className='p-8'
@@ -48,9 +48,9 @@ function RightSide() {
                     <FiMail className='absolute left-2 top-12 text-gray-400' />
 
                     <Input
-                        label='Email Address'
-                        type='email'
-                        name='email'
+                        label='Username'
+                        type='text'
+                        name='username'
                         placeholder='hello@example.com'
                         register={register}
                         error={errors.email}

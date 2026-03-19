@@ -4,7 +4,7 @@ import { Routes, BrowserRouter, Route } from 'react-router-dom';
 import { AuthProvider } from '@contexts/AuthProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SideBarProvider } from '@contexts/SideBarProvider';
-import { FilterProvider } from './contexts/FilterProvider';
+import { OurShopProvider } from '@contexts/OurShopProvider';
 
 const queryClient = new QueryClient();
 
@@ -13,7 +13,7 @@ function App() {
         <SideBarProvider>
             <QueryClientProvider client={queryClient}>
                 <AuthProvider>
-                    <FilterProvider>
+                    <OurShopProvider>
                         <BrowserRouter>
                             <Suspense fallback={<div>LOADING........</div>}>
                                 <Routes>
@@ -29,7 +29,7 @@ function App() {
                                 </Routes>
                             </Suspense>
                         </BrowserRouter>
-                    </FilterProvider>
+                    </OurShopProvider>
                 </AuthProvider>
             </QueryClientProvider>
         </SideBarProvider>

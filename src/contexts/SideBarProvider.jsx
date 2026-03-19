@@ -3,11 +3,11 @@ import { createContext, useState } from 'react';
 export const SideBarContext = createContext();
 
 export const SideBarProvider = ({ children }) => {
-    const [openCart, setOpenCart] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [type,setType] = useState('')
     const values = {
-        openCart,
-        setOpenCart,
+        isOpen,
+        setIsOpen,
         type,
         setType
     };

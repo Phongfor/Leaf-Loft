@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
-import { FilterContext } from '@contexts/FilterProvider';
 import { TbAdjustmentsHorizontal } from 'react-icons/tb';
 import FilterMenu from './FilterMenu/FilterMenu';
+import { OurShopContext } from '@contexts/OurShopProvider';
 
 function CategoryFilter() {
     const {
@@ -12,7 +12,7 @@ function CategoryFilter() {
         setBrand,
         price,
         setPrice
-    } = useContext(FilterContext);
+    } = useContext(OurShopContext);
     const [openFilter, setOpenFilter] = useState(false);
 
     const categories = [

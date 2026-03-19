@@ -14,5 +14,17 @@ export default defineConfig({
             '@pages': path.resolve(__dirname, 'src/pages'),
             '@contexts': path.resolve(__dirname, 'src/contexts')
         }
+    },
+    optimizeDeps: {
+        include: ['swiper', 'swiper/react', 'swiper/modules']
+    },
+    server: {
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8080',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, '')
+            }
+        }
     }
 });
