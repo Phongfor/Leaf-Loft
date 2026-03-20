@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
-import ProductSize from '../../../../components/common/ProductSize/ProductSize';
-import ProductQuantity from '../../../../components/common/ProductQuantity/ProductQuantity';
-import ProductColor from '../../../../components/common/ProductColor/ProductColor';
+import ProductSize from '../../../../../components/common/ProductSize/ProductSize';
+import ProductQuantity from '../../../../../components/common/ProductQuantity/ProductQuantity';
+import ProductColor from '../../../../../components/common/ProductColor/ProductColor';
 import Button from '@/components/common/Button/Button';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 

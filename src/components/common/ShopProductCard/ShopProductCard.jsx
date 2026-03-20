@@ -1,14 +1,30 @@
-import { FiShoppingCart } from 'react-icons/fi';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import ActBar from '../ActBar/ActBar';
 import { useNavigate } from 'react-router-dom';
 import ProductSize from '../ProductSize/ProductSize';
 import ProductColor from '../ProductColor/ProductColor';
+import Button from '../Button/Button';
+import { SideBarContext } from '@contexts/SideBarProvider';
+import { toast } from 'sonner';
 
-function ShopProductCard({ name, image, badge, brand, price, sizes, colors }) {
+function ShopProductCard({ id, name, image, badge, brand, price, sizes, colors }) {
     const [selectedSize, setSelectedSize] = useState(sizes?.[0] || '');
     const [selectedColor, setSelectedColor] = useState(colors?.[0] || {});
+    const { addToCart } = useContext(SideBarContext);
     const navigate = useNavigate();
+
+    const handleAddToCart = () => {
+        addToCart({
+            id,
+            name,
+            image,
+            price,
+            color: selectedColor?.name || '',
+            size: selectedSize || '',
+            quantity: 1,
+        });
+        toast.success(`${name} added to cart!`);
+    };
 
     return (
         <div className='group bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden w-full'>
@@ -30,7 +46,9 @@ function ShopProductCard({ name, image, badge, brand, price, sizes, colors }) {
 
             {/* content */}
             <div className='p-4'>
-                <p className='text-xs text-gray-400 uppercase tracking-wide'>{brand}</p>
+                <p className='text-xs text-gray-400 uppercase tracking-wide'>
+                    {brand}
+                </p>
 
                 <div className='flex justify-between items-center mt-1'>
                     <h3 className='font-semibold text-gray-800'>{name}</h3>
@@ -53,10 +71,12 @@ function ShopProductCard({ name, image, badge, brand, price, sizes, colors }) {
                     />
                 )}
 
-                <button className='mt-4 w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-medium transition'>
-                    <FiShoppingCart />
-                    ADD TO CART
-                </button>
+                <Button
+                    content='ADD TO CART'
+                    isPrimary
+                    className='w-full mt-2'
+                    onClick={handleAddToCart}  // ✅
+                />
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import ProductCard from '../../../../components/common/ProductCard/ProductCard';
+import ProductCard from '../../../../../components/common/ProductCard/ProductCard';
 import TimeBox from './TimeBox/TimeBox';
 import { IoIosFlash } from 'react-icons/io';
 import useCountdown from '@/hooks/useCountDown';

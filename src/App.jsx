@@ -1,4 +1,5 @@
-import routes from '@/routes/routes';
+import routes, { adminRoutes } from '@/routes/routes';
+import PrivateRoute from '@/routes/PrivateRoute';
 import { Suspense } from 'react';
 import { Routes, BrowserRouter, Route } from 'react-router-dom';
 import { AuthProvider } from '@contexts/AuthProvider';
@@ -20,15 +21,29 @@ function App() {
                             <BrowserRouter>
                                 <Suspense fallback={<div>LOADING........</div>}>
                                     <Routes>
-                                        {routes.map((item, index) => {
-                                            return (
-                                                <Route
-                                                    path={item.path}
-                                                    element={<item.component />}
-                                                    key={index}
-                                                />
-                                            );
-                                        })}
+                                        {/* Client routes */}
+                                        {routes.map((item, index) => (
+                                            <Route
+                                                key={index}
+                                                path={item.path}
+                                                element={<item.component />}
+                                            />
+                                        ))}
+
+                                        {/* Admin routes */}
+                                        {adminRoutes.map((item, index) => (
+                                            <Route
+                                                key={`admin-${index}`}
+                                                path={item.path}
+                                                element={
+                                                    <PrivateRoute
+                                                        role={item.role}
+                                                    >
+                                                        <item.component />
+                                                    </PrivateRoute>
+                                                }
+                                            />
+                                        ))}
                                     </Routes>
                                 </Suspense>
                             </BrowserRouter>

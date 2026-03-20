@@ -1,4 +1,4 @@
-import products from '../../../pages/HomePage/components/FeatureProduct/contants';
+import products from '../../../pages/client/HomePage/components/FeatureProduct/contants';
 import ProductCard from '../ProductCard/ProductCard';
 
 function ProductList() {

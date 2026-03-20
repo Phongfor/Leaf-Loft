@@ -1,5 +1,5 @@
 import heroImg from '@assets/Images/heroImg.svg';
-import Button from '../../../../components/common/Button/Button';
+import Button from '../../../../../components/common/Button/Button';
 
 function Hero() {
     return (

@@ -16,28 +16,38 @@ function RightSide() {
         formState: { errors }
     } = useForm();
 
-    const { openRegister, setUser, closeAuth } = useContext(AuthContext);
+    const { openRegister, setUser, closeAuth,setUserRole } = useContext(AuthContext);
 
     const onSubmit = async (data) => {
-        try {
-            const res = await login(data);
+        // try {
+        //     const res = await login(data);
 
-            setUser(res.data.result.userName);
-            localStorage.setItem(
-                'user',
-                JSON.stringify(res.data.result.userName)
-            );
-            localStorage.setItem('accessToken', res.data.result.accessToken);
-            localStorage.setItem('refreshToken', res.data.result.refreshToken);
+        //     setUser(res.data.result.userName);
+        //     localStorage.setItem(
+        //         'user',
+        //         JSON.stringify(res.data.result.userName)
+        //     );
+        //     localStorage.setItem('accessToken', res.data.result.accessToken);
+        //     localStorage.setItem('refreshToken', res.data.result.refreshToken);
+        //     localStorage.setItem('userRole', res.data.result.role ?? 'user');
+        //     toast.success('Đăng nhập thành công!');
+        //     closeAuth();
+        // } catch (err) {
+        //     toast.error(
+        //         err?.response?.data?.message ??
+        //             'Đăng nhập thất bại, thử lại sau'
+        //     );
+        // }
+        const fakeUser = 'admin_test';
+        const fakeRole = 'admin';
 
-            toast.success('Đăng nhập thành công!');
-            closeAuth();
-        } catch (err) {
-            toast.error(
-                err?.response?.data?.message ??
-                    'Đăng nhập thất bại, thử lại sau'
-            );
-        }
+        setUser(fakeUser);
+        setUserRole(fakeRole);
+        localStorage.setItem('user', JSON.stringify(fakeUser));
+        localStorage.setItem('userRole', fakeRole);
+
+        toast.success('Đăng nhập thành công!');
+        closeAuth();
     };
 
     return (

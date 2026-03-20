@@ -5,6 +5,8 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [authMode, setAuthMode] = useState(null);
     const [user, setUser] = useState(null);
+    const [userRole, setUserRole] = useState('user');
+    const [loading, setLoading] = useState(true); // ✅ thêm
 
     const openLogin = () => setAuthMode('login');
     const openRegister = () => setAuthMode('register');
@@ -12,10 +14,12 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            const data = JSON.parse(storedUser);
-            setUser(data);
-        }
+        if (storedUser) setUser(JSON.parse(storedUser));
+
+        const storedRole = localStorage.getItem('userRole');
+        if (storedRole) setUserRole(storedRole);
+
+        setLoading(false); // ✅ xong mới cho render
     }, []);
 
     const values = {
@@ -24,7 +28,10 @@ export const AuthProvider = ({ children }) => {
         openRegister,
         closeAuth,
         user,
-        setUser
+        setUser,
+        userRole,
+        setUserRole,
+        loading, // ✅ expose ra
     };
 
     return (
