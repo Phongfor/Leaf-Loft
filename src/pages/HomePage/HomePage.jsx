@@ -1,12 +1,12 @@
-import BestSellers from '@/components/common/BestSellers/BestSellers';
-import FlashSale from '@/components/common/FlashSale/FlashSale';
+import BestSellers from '@/pages/HomePage/components/BestSellers/BestSellers';
+import FlashSale from '@/pages/HomePage/components/FlashSale/FlashSale';
 import Category from '@components/common/Category/Category';
-import FeatureProduct from '@components/common/FeatureProduct/FeatureProduct';
+import FeatureProduct from '@/pages/HomePage/components/FeatureProduct/FeatureProduct';
 import Footer from '@components/common/Footer/Footer';
 import Header from '@components/common/Header/Header';
-import Hero from '@components/common/Hero/Hero';
-import JoinCommunity from '@components/common/JoinCommunity/JoinCommunity';
-import OurStory from '@components/common/OurStory/OurStory';
+import Hero from '@/pages/HomePage/components/Hero/Hero';
+import JoinCommunity from '@/pages/HomePage/components/JoinCommunity/JoinCommunity';
+import OurStory from '@/pages/HomePage/components/OurStory/OurStory';
 
 function HomePage() {
     return (
@@ -15,8 +15,8 @@ function HomePage() {
             <Hero />
             <Category />
             <FeatureProduct />
-            <BestSellers/>
-            <FlashSale/>
+            <BestSellers />
+            <FlashSale />
             <OurStory />
             <JoinCommunity />
             <Footer />

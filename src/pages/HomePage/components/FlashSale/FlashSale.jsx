@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import ProductCard from '../ProductCard/ProductCard';
+import ProductCard from '../../../../components/common/ProductCard/ProductCard';
 import TimeBox from './TimeBox/TimeBox';
 import { IoIosFlash } from 'react-icons/io';
 import useCountdown from '@/hooks/useCountDown';
 
 function FlashSale() {
-   const time=useCountdown(3)
+    const time = useCountdown(3);
     return (
         <section className='bg-[#071a2f] py-20'>
             <div className='max-w-7xl mx-auto px-6'>

@@ -20,6 +20,14 @@ const routes = [
     {
         path: '/about-us',
         component: lazy(() => import('@pages/AboutUs/AboutUs'))
+    },
+    {
+        path: '/cart',
+        component: lazy(() => import('@pages/CartPage/CartPage'))
+    },
+    {
+        path: '/my-orders',
+        component: lazy(() => import('@pages/MyOrdersPage/MyOrdersPage'))
     }
 ];
 

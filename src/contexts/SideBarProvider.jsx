@@ -4,7 +4,7 @@ export const SideBarContext = createContext();
 
 export const SideBarProvider = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [type, setType] = useState('cart'); 
+    const [type, setType] = useState('cart');
 
     const [cart, setCart] = useState([]);
     const [wishlist, setWishlist] = useState([]);
@@ -44,6 +44,21 @@ export const SideBarProvider = ({ children }) => {
         );
     };
 
+    const decreaseQuantity = (id, color, size) => {
+        setCart(
+            (prev) =>
+                prev
+                    .map((item) =>
+                        item.id === id &&
+                        item.color === color &&
+                        item.size === size
+                            ? { ...item, quantity: item.quantity - 1 }
+                            : item
+                    )
+                    .filter((item) => item.quantity > 0) 
+        );
+    };
+
     const toggleWishlist = (product) => {
         setWishlist((prev) => {
             const exists = prev.find((item) => item.id === product.id);
@@ -65,14 +80,15 @@ export const SideBarProvider = ({ children }) => {
         setIsOpen,
         type,
         setType,
-        cart,
+        cart,setCart,
         addToCart,
         removeFromCart,
         wishlist,
         toggleWishlist,
         removeFromWishlist,
         cartCount,
-        wishlistCount
+        wishlistCount,
+        decreaseQuantity
     };
 
     return (

@@ -1,5 +1,5 @@
 import SectionLayout from '@/components/layout/SectionLayout/SectionLayout';
-import ProductList from '../ProductList/ProductList';
+import ProductList from '../../../../components/common/ProductList/ProductList';
 import { FaArrowRight } from 'react-icons/fa';
 import { FaRegStar } from 'react-icons/fa';
 

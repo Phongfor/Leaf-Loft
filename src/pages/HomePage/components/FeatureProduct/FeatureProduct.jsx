@@ -1,4 +1,4 @@
-import ProductList from '../ProductList/ProductList';
+import ProductList from '../../../../components/common/ProductList/ProductList';
 import SectionLayout from '@/components/layout/SectionLayout/SectionLayout';
 import { FaArrowRight } from 'react-icons/fa';
 

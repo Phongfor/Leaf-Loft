@@ -1,5 +1,5 @@
-import Button from '../Button/Button';
-import Input from '../Input/Input';
+import Button from '../../../../components/common/Button/Button';
+import Input from '../../../../components/common/Input/Input';
 
 function JoinCommunity() {
     return (
@@ -27,7 +27,7 @@ function JoinCommunity() {
                         placeHolder={'Enter your email'}
                         className='bg-lime-300/40 w-[320px]'
                     />
-                    <Button content={"Sign up"}/>
+                    <Button content={'Sign up'} />
                 </div>
             </div>
         </section>

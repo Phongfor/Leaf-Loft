@@ -4,9 +4,11 @@ import ItemProduct from '../components/ItemProduct/ItemProduct';
 import Button from '../../Button/Button';
 import HeaderSideBar from '../components/HeaderSideBar/HeaderSideBar';
 import { SideBarContext } from '@contexts/SideBarProvider';
+import { useNavigate } from 'react-router-dom';
 
 function CartSidebar() {
     const { cart, removeFromCart } = useContext(SideBarContext);
+    const navigate = useNavigate()
 
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -42,7 +44,7 @@ function CartSidebar() {
                     <span>${subtotal.toFixed(2)}</span>
                 </div>
                 <div className='flex flex-col gap-3'>
-                    <Button content='VIEW CART' isPrimary />
+                    <Button content='VIEW CART' isPrimary onClick={()=> navigate('/cart')}  />
                     <Button content='CHECKOUT' />
                 </div>
             </div>
