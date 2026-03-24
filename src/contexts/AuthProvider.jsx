@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 export const AuthContext = createContext();
 
@@ -6,7 +7,7 @@ export const AuthProvider = ({ children }) => {
     const [authMode, setAuthMode] = useState(null);
     const [user, setUser] = useState(null);
     const [userRole, setUserRole] = useState('user');
-    const [loading, setLoading] = useState(true); // ✅ thêm
+    const [loading, setLoading] = useState(true);
 
     const openLogin = () => setAuthMode('login');
     const openRegister = () => setAuthMode('register');
@@ -14,12 +15,25 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
-        if (storedUser) setUser(JSON.parse(storedUser));
+        const role = localStorage.getItem('userRole');
+        // const token = localStorage.getItem('accessToken');
 
-        const storedRole = localStorage.getItem('userRole');
-        if (storedRole) setUserRole(storedRole);
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+        if(role) setUserRole(role)
 
-        setLoading(false); // ✅ xong mới cho render
+        // if (token) {
+        //     try {
+        //         const decoded = jwtDecode(token);
+        //         setUserRole(decoded.role);
+        //     } catch (err) {
+        //         console.error('Token không hợp lệ');
+        //         localStorage.removeItem('accessToken');
+        //     }
+        // }
+
+        setLoading(false);
     }, []);
 
     const values = {
@@ -31,7 +45,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         userRole,
         setUserRole,
-        loading, // ✅ expose ra
+        loading
     };
 
     return (

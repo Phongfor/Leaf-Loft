@@ -9,6 +9,7 @@ import { useContext } from 'react';
 import { login } from '@/services/AuthService';
 import { toast } from 'sonner';
 
+
 function RightSide() {
     const {
         register,
@@ -29,7 +30,6 @@ function RightSide() {
         //     );
         //     localStorage.setItem('accessToken', res.data.result.accessToken);
         //     localStorage.setItem('refreshToken', res.data.result.refreshToken);
-        //     localStorage.setItem('userRole', res.data.result.role ?? 'user');
         //     toast.success('Đăng nhập thành công!');
         //     closeAuth();
         // } catch (err) {

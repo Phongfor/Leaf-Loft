@@ -3,8 +3,8 @@ import DashboardPage from './pages/DashboardPage/Dashboardpage';
 import InventoryPage from './pages/InventoryPage/Inventorypage';
 import OrdersPage from './pages/OrdersPage/Orderspage';
 import CustomersPage from './pages/CustomersPage/Customerspage';
-import AdminSidebar from './components/layout/AdminSidebar';
-import AdminHeader from './components/layout/AdminHeader';
+import AdminSidebar from './components/AdminSidebar';
+import AdminHeader from './components/AdminHeader';
 
 const pageConfig = {
     dashboard: {

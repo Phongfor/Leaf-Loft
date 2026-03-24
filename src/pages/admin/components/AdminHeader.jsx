@@ -1,11 +1,16 @@
+import { AuthContext } from '@/contexts/AuthProvider';
+import { useContext } from 'react';
 import { LuSearch, LuBell } from 'react-icons/lu';
 
 function AdminHeader({ title, subtitle }) {
+    const { user } = useContext(AuthContext);
     return (
         <header className='flex items-center justify-between px-8 py-4 bg-white border-b border-gray-100'>
             <div>
                 <h1 className='text-xl font-bold text-gray-900'>{title}</h1>
-                {subtitle && <p className='text-xs text-gray-400 mt-0.5'>{subtitle}</p>}
+                {subtitle && (
+                    <p className='text-xs text-gray-400 mt-0.5'>{subtitle}</p>
+                )}
             </div>
 
             <div className='flex items-center gap-4'>
@@ -25,12 +30,12 @@ function AdminHeader({ title, subtitle }) {
 
                 <div className='flex items-center gap-2'>
                     <div className='text-right'>
-                        <p className='text-xs font-semibold text-gray-900'>Alex Manager</p>
+                       {user && <p className='text-xs font-semibold text-gray-900'>
+                            {user}
+                        </p>}
                         <p className='text-[10px] text-gray-400'>Super Admin</p>
                     </div>
-                    <div className='w-9 h-9 rounded-full bg-green-400 flex items-center justify-center text-white text-sm font-bold'>
-                        A
-                    </div>
+                   
                 </div>
             </div>
         </header>

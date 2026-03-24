@@ -5,7 +5,6 @@ import { AuthContext } from '@contexts/AuthProvider';
 function PrivateRoute({ children, role }) {
     const { user, userRole, loading } = useContext(AuthContext);
 
-    // ✅ chờ load xong mới kiểm tra
     if (loading) return <div>Loading...</div>;
 
     if (!user) return <Navigate to='/' replace />;

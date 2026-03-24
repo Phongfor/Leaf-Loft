@@ -12,21 +12,15 @@ import { SideBarContext } from '@contexts/SideBarProvider';
 import ContentSideBar from '../ContentSideBar/ContentSideBar';
 import useScrollHeader from '@/hooks/useScrollHeader';
 import { useNavigate } from 'react-router-dom';
+import Dropdown from '../Dropdown/Dropdown';
 
 function Header() {
-    const { openLogin, user, setUser } = useContext(AuthContext);
+    const { openLogin, user } = useContext(AuthContext);
     const { setIsOpen, setType, cartCount, wishlistCount } =
         useContext(SideBarContext);
     const showHeader = useScrollHeader();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const logout = () => {
-        setUser(null);
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('user');
-        localStorage.removeItem('expiresAt');
-    };
     const handleOpenCartSideBar = (type) => {
         setIsOpen(true);
         setType(type);
@@ -39,7 +33,12 @@ function Header() {
         >
             <div className='flex items-center justify-between px-10 h-20'>
                 <div className='flex items-center gap-10'>
-                    <img src={logo} alt='logo' className='w-32 cursor-pointer' onClick={()=> navigate("/")} />
+                    <img
+                        src={logo}
+                        alt='logo'
+                        className='w-32 cursor-pointer'
+                        onClick={() => navigate('/')}
+                    />
 
                     <div className='flex gap-6'>
                         {dataMenu.map((menu, index) => (
@@ -88,21 +87,7 @@ function Header() {
                                 </span>
                             </span>
 
-                            <div className='absolute right-0 mt-2 w-32 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200'>
-                                 <button
-                        onClick={() => navigate('/my-orders')}
-                        className='block w-full text-left px-4 py-2 hover:bg-gray-100 text-sm rounded-t-lg'
-                    >
-                        My Orders
-                    </button>                   
-
-                                <button
-                                    onClick={logout}
-                                    className='block w-full text-left px-4 py-2 hover:bg-gray-100 rounded-lg'
-                                >
-                                    Logout
-                                </button>
-                            </div>
+                            <Dropdown />
                         </div>
                     ) : (
                         <Button
