@@ -18,7 +18,7 @@ function Dropdown() {
 
     const menuItems = [
         { label: 'My Orders', path: '/my-orders', show: true },
-        { label: 'Dashboard', path: '/admin', show: userRole === 'admin' },
+        { label: 'Dashboard', path: '/admin', show: userRole === 'ROLE_ADMIN' },
     ];
 
     return (

@@ -7,10 +7,9 @@ import { SideBarContext } from '@contexts/SideBarProvider';
 import { useNavigate } from 'react-router-dom';
 
 function CartSidebar() {
-    const { cart, removeFromCart } = useContext(SideBarContext);
+    const { cart, removeFromCart,total } = useContext(SideBarContext);
     const navigate = useNavigate()
-
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    console.log(cart)
 
     return (
         <div className='flex flex-col h-full'>
@@ -41,7 +40,7 @@ function CartSidebar() {
             <div className='p-6 border-t bg-white'>
                 <div className='flex justify-between mb-6 text-sm'>
                     <span>SUBTOTAL :</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                    <span>${total.toFixed(2)}</span>
                 </div>
                 <div className='flex flex-col gap-3'>
                     <Button content='VIEW CART' isPrimary onClick={()=> navigate('/cart')}  />

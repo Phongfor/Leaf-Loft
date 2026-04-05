@@ -1,4 +1,6 @@
-import { createContext, useState } from 'react';
+import { addCartItem, getCart } from '@/services/CartSevice';
+import { createContext, useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 export const SideBarContext = createContext();
 
@@ -7,28 +9,24 @@ export const SideBarProvider = ({ children }) => {
     const [type, setType] = useState('cart');
 
     const [cart, setCart] = useState([]);
+    const [total, setTotal] = useState(0);
+
     const [wishlist, setWishlist] = useState([]);
 
-    const addToCart = (product) => {
-        setCart((prev) => {
-            const existing = prev.find(
-                (item) =>
-                    item.id === product.id &&
-                    item.color === product.color &&
-                    item.size === product.size
+    const addToCart = async (product) => {
+        try {
+            const payload = {
+                productVariantId: product.productVariantId,
+                quantity: product.quantity
+            };
+            const res = await addCartItem(payload);
+
+            toast.success('Thêm vào giỏ hàng thành công!');
+        } catch (err) {
+            toast.error(
+                err?.response?.data?.message || 'Thêm vào giỏ hàng thất bại'
             );
-            if (existing) {
-                return prev.map((item) =>
-                    item === existing
-                        ? {
-                              ...item,
-                              quantity: item.quantity + product.quantity
-                          }
-                        : item
-                );
-            }
-            return [...prev, product];
-        });
+        }
     };
 
     const removeFromCart = (id, color, size) => {
@@ -69,9 +67,26 @@ export const SideBarProvider = ({ children }) => {
         setWishlist((prev) => prev.filter((item) => item.id !== id));
     };
 
-    const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartCount = Array.isArray(cart)
+        ? cart.reduce((sum, item) => sum + item.quantity, 0)
+        : 0;
     const wishlistCount = wishlist.length;
 
+    useEffect(() => {
+        const fetchCart = async () => {
+            try {
+                const res = await getCart();
+                const result = res.data.result;
+                setCart(result.items ?? []);
+                setTotal(result.totalPrice ?? 0);
+            } catch (err) {9
+                toast.error(
+                    err?.response?.data?.message || 'Không thể tải giỏ hàng'
+                );
+            }
+        };
+        fetchCart();
+    }, []);
     const values = {
         isOpen,
         setIsOpen,
@@ -86,7 +101,8 @@ export const SideBarProvider = ({ children }) => {
         removeFromWishlist,
         cartCount,
         wishlistCount,
-        decreaseQuantity
+        decreaseQuantity,
+        total
     };
 
     return (

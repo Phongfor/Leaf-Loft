@@ -8,7 +8,7 @@ import { AuthContext } from '@/contexts/AuthProvider';
 import { useContext } from 'react';
 import { login } from '@/services/AuthService';
 import { toast } from 'sonner';
-
+import { jwtDecode } from 'jwt-decode';
 
 function RightSide() {
     const {
@@ -17,38 +17,38 @@ function RightSide() {
         formState: { errors }
     } = useForm();
 
-    const { openRegister, setUser, closeAuth,setUserRole } = useContext(AuthContext);
+    const { openRegister, setUser, closeAuth, setUserRole } =
+        useContext(AuthContext);
 
-    const onSubmit = async (data) => {
-        // try {
-        //     const res = await login(data);
+   const onSubmit = async (data) => {
+    try {
+        const res = await login(data);
 
-        //     setUser(res.data.result.userName);
-        //     localStorage.setItem(
-        //         'user',
-        //         JSON.stringify(res.data.result.userName)
-        //     );
-        //     localStorage.setItem('accessToken', res.data.result.accessToken);
-        //     localStorage.setItem('refreshToken', res.data.result.refreshToken);
-        //     toast.success('Đăng nhập thành công!');
-        //     closeAuth();
-        // } catch (err) {
-        //     toast.error(
-        //         err?.response?.data?.message ??
-        //             'Đăng nhập thất bại, thử lại sau'
-        //     );
-        // }
-        const fakeUser = 'admin_test';
-        const fakeRole = 'admin';
+        const accessToken = res.data.result.accessToken;
 
-        setUser(fakeUser);
-        setUserRole(fakeRole);
-        localStorage.setItem('user', JSON.stringify(fakeUser));
-        localStorage.setItem('userRole', fakeRole);
+        const decoded = jwtDecode(accessToken);
+
+        const role =decoded.scope;
+
+        setUserRole(role)
+
+        setUser(decoded.username);
+        localStorage.setItem('user', decoded.username);
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem(
+            'refreshToken',
+            res.data.result.refreshToken
+        );
 
         toast.success('Đăng nhập thành công!');
         closeAuth();
-    };
+    } catch (err) {
+        toast.error(
+            err?.response?.data?.message ??
+                'Đăng nhập thất bại, thử lại sau'
+        );
+    }
+};
 
     return (
         <motion.div

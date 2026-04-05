@@ -4,6 +4,7 @@ import ProductQuantity from '../../../../../components/common/ProductQuantity/Pr
 import ProductColor from '../../../../../components/common/ProductColor/ProductColor';
 import Button from '@/components/common/Button/Button';
 import { SideBarContext } from '@/contexts/SideBarProvider';
+import { toast } from 'sonner';
 
 function ProductInfo({
     productId,
@@ -17,23 +18,27 @@ function ProductInfo({
     setSelectedColor,
     selectedSize,
     setSelectedSize,
-    mainImage
+    mainImage,
+    productVariant
 }) {
     const [quantity, setQuantity] = useState(1);
     const { addToCart, toggleWishlist, wishlist } = useContext(SideBarContext);
     const isWishlisted = wishlist.some((item) => item.id === productId);
 
     const handleAddToCart = () => {
+        console.log('CLICK ADD CART');
+        if (!productVariant) {
+            toast.error('Vui lòng chọn màu và size hợp lệ');
+            return;
+        }
+
         addToCart({
-            id: productId,
-            name,
-            price,
-            image: mainImage,
-            color: selectedColor.name,
-            size: selectedSize,
+            productVariantId: productVariant.id,
             quantity
         });
     };
+    console.log(productVariant?.id)
+    console.log(quantity)
 
     return (
         <div>

@@ -7,23 +7,41 @@ import Button from '../Button/Button';
 import { SideBarContext } from '@contexts/SideBarProvider';
 import { toast } from 'sonner';
 
-function ShopProductCard({ id, name, image, badge, brand, price, sizes, colors }) {
+function ShopProductCard({
+    id,
+    name,
+    image,
+    badge,
+    brand,
+    price,
+    sizes,
+    colors
+}) {
     const [selectedSize, setSelectedSize] = useState(sizes?.[0] || '');
     const [selectedColor, setSelectedColor] = useState(colors?.[0] || {});
     const { addToCart } = useContext(SideBarContext);
     const navigate = useNavigate();
 
     const handleAddToCart = () => {
+        if (!selectedColor || !selectedSize) {
+            toast.error('Vui lòng chọn màu và size');
+            return;
+        }
+
+        // tìm variant tương ứng
+        const variant = productVariants.find(
+            (v) => v.color === selectedColor.name && v.size === selectedSize
+        );
+
+        if (!variant) {
+            toast.error('Không tìm thấy sản phẩm phù hợp');
+            return;
+        }
+
         addToCart({
-            id,
-            name,
-            image,
-            price,
-            color: selectedColor?.name || '',
-            size: selectedSize || '',
-            quantity: 1,
+            productVariantId: variant.id,
+            quantity: 1
         });
-        toast.success(`${name} added to cart!`);
     };
 
     return (
@@ -34,7 +52,7 @@ function ShopProductCard({ id, name, image, badge, brand, price, sizes, colors }
                     src={image}
                     alt={name}
                     className='w-full h-56 object-cover cursor-pointer'
-                    onClick={() => navigate('/detailproduct')}
+                    onClick={() => navigate(`/detailproduct/${id}`)}
                 />
                 {badge && (
                     <span className='absolute bottom-3 left-3 bg-green-500 text-white text-xs px-2 py-1 rounded'>
@@ -75,7 +93,7 @@ function ShopProductCard({ id, name, image, badge, brand, price, sizes, colors }
                     content='ADD TO CART'
                     isPrimary
                     className='w-full mt-2'
-                    onClick={handleAddToCart}  // ✅
+                    onClick={handleAddToCart} // ✅
                 />
             </div>
         </div>

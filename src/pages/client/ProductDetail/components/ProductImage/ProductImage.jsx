@@ -12,14 +12,14 @@ function ProductImage({ images, mainImage, setMainImage }) {
 
             {/* THUMBNAILS */}
             <div className="flex gap-3">
-                {images.map((img, index) => (
+                {images.map((img) => (
                     <img
-                        key={index}
-                        src={img}
+                        key={img.id}
+                        src={img.imageUrl}
                         alt=""
                         onClick={() => setMainImage(img)}
                         className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 
-                            ${mainImage === img ? "border-green-500" : "border-transparent"}`}
+                            ${mainImage?.id === img.id ? "border-green-500" : "border-transparent"}`}
                     />
                 ))}
             </div>

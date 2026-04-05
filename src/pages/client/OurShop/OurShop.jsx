@@ -13,7 +13,6 @@ const ITEMS_PER_PAGE = 8;
 function OurShop() {
     const { filteredProducts, currentPage, setCurrentPage } =
         useContext(OurShopContext);
-
     const offset = currentPage * ITEMS_PER_PAGE;
     const currentProducts = filteredProducts.slice(offset, offset + ITEMS_PER_PAGE);
     const pageCount = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
@@ -27,11 +26,12 @@ function OurShop() {
                 {currentProducts.map((p) => (
                     <ShopProductCard
                         key={p.id}
+                        brand={p.brand}
                         name={p.name}
                         id={p.id}
-                        image={p.image}
+                        image={p.thumbnail}
                         badge={p.badge}
-                        price={p.price}
+                        price={p.minPrice}
                         sizes={p.sizes}
                         colors={p.colors}
                     />

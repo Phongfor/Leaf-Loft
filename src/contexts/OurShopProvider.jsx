@@ -16,20 +16,18 @@ export const OurShopProvider = ({ children }) => {
     const [currentPage, setCurrentPage] = useState(0);
 
     const loadProductList = async () => {
-
-        setProductList(Shopproducts)
-        // setLoading(true);
-        // setError(null);
-        // try {
-        //     const response = await getProductList({ page: 0, size: 10, sort: ['name,asc'] });
-        //     console.log('API response:', response.data);
-        //     setProductList(response.data?.result?.content || []);
-        // } catch (err) {
-        //     setError(err?.message || 'Lỗi khi tải sản phẩm');
-        //     console.error('Load product error:', err?.message);
-        // } finally {
-        //     setLoading(false);
-        // }
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await getProductList({ page: 0, size: 10, sortField : 'name', direction : 'ASC' });
+            // console.log('API response:', response.data.result.content);
+            setProductList(response.data.result?.content || []);
+        } catch (err) {
+            setError(err?.message || 'Lỗi khi tải sản phẩm');
+            console.error('Load product error:', err?.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -38,19 +36,22 @@ export const OurShopProvider = ({ children }) => {
 
     // ── Filter logic ──────────────────────────────────
     const filteredProducts = useMemo(() => {
-        return productList.filter((p) => {
-            const matchCategory =
-                category === 'All Items' || p.category === category;
-            const matchBrand = brand.length === 0 || brand.includes(p.brand);
-            const matchPrice =
-                price === 'all' ||
-                (price === 'under50' && p.price < 50) ||
-                (price === 'mid' && p.price >= 50 && p.price <= 100) ||
-                (price === 'above100' && p.price > 100);
+    return productList.filter((p) => {
+        const matchCategory =
+            category === 'All Items' || p.category === category;
 
-            return matchCategory && matchBrand && matchPrice;
-        });
-    }, [productList, category, brand, price]);
+        const matchBrand =
+            brand.length === 0 || brand.includes(p.brand);
+
+        const matchPrice =
+            price === 'all' ||
+            (price === 'under50' && p.minPrice < 50) ||
+            (price === 'mid' && p.minPrice >= 50 && p.maxPrice <= 100) ||
+            (price === 'above100' && p.minPrice > 100);
+
+        return matchCategory && matchBrand && matchPrice;
+    });
+}, [productList, category, brand, price]);
 
     // ── Reset page khi filter thay đổi ────────────────
     useEffect(() => {

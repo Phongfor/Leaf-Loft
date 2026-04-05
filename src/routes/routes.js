@@ -10,7 +10,7 @@ const routes = [
         component: lazy(() => import('@pages/client/OurShop/OurShop'))
     },
     {
-        path: '/detailproduct',
+        path: '/detailproduct/:id',
         component: lazy(
             () => import('@pages/client/ProductDetail/ProductDetail')
         )
@@ -41,7 +41,7 @@ export const adminRoutes = [
     {
         path: '/admin',
         component: lazy(() => import('@pages/admin/AdminPanel')),
-        role: 'admin'
+        role: 'ROLE_ADMIN'
     }
 ];
 

@@ -16,12 +16,18 @@ const deleteProduct = async (productId) => {
     return await axiosClient.delete(`/product/${productId}`);
 };
 
-const getProductList = async ({ page = 0, size = 10, sort = [] } = {}) => {
+const getProductList = async (
+  page = 0,
+  size = 10,
+  sortField = 'name',
+  direction = 'ASC'
+) => {
     return await axiosClient.get('/product/list', {
         params: {
             page,
             size,
-            sort
+            sortField,
+            direction
         }
     });
 };

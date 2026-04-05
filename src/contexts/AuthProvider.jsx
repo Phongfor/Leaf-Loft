@@ -6,7 +6,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [authMode, setAuthMode] = useState(null);
     const [user, setUser] = useState(null);
-    const [userRole, setUserRole] = useState('user');
+    const [userRole, setUserRole] = useState('ROLE_USER');
     const [loading, setLoading] = useState(true);
 
     const openLogin = () => setAuthMode('login');
@@ -15,23 +15,21 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
-        const role = localStorage.getItem('userRole');
-        // const token = localStorage.getItem('accessToken');
+        const token = localStorage.getItem('accessToken');
 
         if (storedUser) {
-            setUser(JSON.parse(storedUser));
+            setUser(storedUser);
         }
-        if(role) setUserRole(role)
 
-        // if (token) {
-        //     try {
-        //         const decoded = jwtDecode(token);
-        //         setUserRole(decoded.role);
-        //     } catch (err) {
-        //         console.error('Token không hợp lệ');
-        //         localStorage.removeItem('accessToken');
-        //     }
-        // }
+        if (token) {
+            try {
+                const decoded = jwtDecode(token);
+                setUserRole(decoded.scope);
+            } catch (err) {
+                console.error('Token không hợp lệ');
+                localStorage.removeItem('accessToken');
+            }
+        }
 
         setLoading(false);
     }, []);
